@@ -125,9 +125,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Student Management System VS code\main.cpp" />
     <ClCompile Include="..\..\..\Student Management System VS code\Student.cpp" />
+    <ClCompile Include="StudentManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Student Management System VS code\Student.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="StudentManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
