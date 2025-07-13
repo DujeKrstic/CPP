@@ -123,8 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Student Management System VS code\main.cpp" />
-    <ClCompile Include="..\..\..\Student Management System VS code\Student.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentManager.cpp" />
   </ItemGroup>
   <ItemGroup>
