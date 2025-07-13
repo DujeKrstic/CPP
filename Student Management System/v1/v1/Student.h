@@ -21,7 +21,8 @@ public:
     std::string getIme() const;
     std::string getPrezime() const;
 
-    void prikazi() const;
+    virtual void prikazi() const;
+    virtual ~Student() = default;
 
     const std::vector<int>& getOcjene() const;
 };

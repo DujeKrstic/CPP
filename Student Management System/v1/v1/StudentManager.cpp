@@ -2,23 +2,27 @@
 #include <iostream>
 #include <fstream>
 
+StudentManager::~StudentManager() {
+	for (Student* s : studenti) {
+		delete s;
+	}
+}
 
-
-void StudentManager::dodajStudenta(const Student& s) {
+void StudentManager::dodajStudenta(Student* s) {
 	studenti.push_back(s);
 }
 
 void StudentManager::prikaziSve() const {
 	for (const auto& s : studenti) {
-		s.prikazi();
+		s->prikazi(); //koristimo virtualni prikaz
 		std::cout << "---------------------------------\n";
 	}
 }
 
 Student* StudentManager::pronadiPoId(int id) {
 	for (auto& s : studenti) {
-		if (s.getId() == id) {
-			return &s;
+		if (s->getId() == id) {
+			return s;
 		}
 	}
 	return nullptr;
@@ -32,11 +36,11 @@ void StudentManager::spremiUDatoteku(const std::string& nazivDatoteke) const {
 	}
 	
 	for (const auto& s : studenti) {
-		out << s.getId() << ' ' << s.getIme() << ' ' << s.getPrezime() << ' ';
-		out << s.izracunajProsjek() << ' ';
+		out << s->getId() << ' ' << s->getIme() << ' ' << s->getPrezime() << ' ';
+		out << s->izracunajProsjek() << ' ';
 		//Spremi broj ocjena i svaku ocjenu
 
-		const auto& ocjene = s.getOcjene();
+		const auto& ocjene = s->getOcjene();
 		out << ocjene.size() << ' ';
 		for (int o : ocjene) {
 			out << o << ' ';
@@ -57,17 +61,18 @@ void StudentManager::ucitajIzDatoteke(const std::string& nazivDatoteke) {
 		return;
 	}
 
+	for (Student* s : studenti) delete s; //briši stare
 	studenti.clear();
 
 	int id, brojOcjena;
 	std::string ime, prezime;
 	double prosjek;
 	while (in >> id >> ime >> prezime >> prosjek >> brojOcjena) {
-		Student s(id, ime, prezime);
+		Student* s = new Student(id, ime, prezime);
 		for (int i = 0; i < brojOcjena; ++i) {
 			int ocjena;
 			in >> ocjena;
-			s.dodajOcjenu(ocjena);
+			s->dodajOcjenu(ocjena);
 		}
 		studenti.push_back(s);
 	}
