@@ -1,4 +1,5 @@
 #include "StudentManager.h"
+#include "DiplomiraniStudent.h"
 #include <iostream>
 #include <fstream>
 
@@ -36,8 +37,17 @@ void StudentManager::spremiUDatoteku(const std::string& nazivDatoteke) const {
 	}
 	
 	for (const auto& s : studenti) {
-		out << s->getId() << ' ' << s->getIme() << ' ' << s->getPrezime() << ' ';
-		out << s->izracunajProsjek() << ' ';
+		
+		if(dynamic_cast<const DiplomiraniStudent*>(s)) {
+			out << "D ";
+		} else {
+			out << "S ";
+		}
+		
+		out << s->getId() << ' '
+			<< s->getIme() << ' '
+			<< s->getPrezime() << ' '
+			<< s->izracunajProsjek() << ' ';
 		//Spremi broj ocjena i svaku ocjenu
 
 		const auto& ocjene = s->getOcjene();
@@ -46,6 +56,11 @@ void StudentManager::spremiUDatoteku(const std::string& nazivDatoteke) const {
 			out << o << ' ';
 		}
 
+		if(const auto* ds = dynamic_cast<const DiplomiraniStudent*>(s)) {
+			out << ds->getTemaDiplomskog();
+		} else {
+			out << "N/A "; //ako nije diplomirani student, ispisi N/A
+		}
 		
 		out << '\n';
 	}
@@ -57,26 +72,45 @@ void StudentManager::spremiUDatoteku(const std::string& nazivDatoteke) const {
 void StudentManager::ucitajIzDatoteke(const std::string& nazivDatoteke) {
 	std::ifstream in(nazivDatoteke);
 	if (!in) {
-		std::cerr << "Ne mogu otvoriti datoteku za ?itanje.\n";
+		std::cerr << "Ne mogu otvoriti datoteku za citanje.\n";
 		return;
 	}
 
-	for (Student* s : studenti) delete s; //briši stare
+	// Ocisti prethodne studente
+	for (Student* s : studenti) delete s;
 	studenti.clear();
 
-	int id, brojOcjena;
-	std::string ime, prezime;
-	double prosjek;
-	while (in >> id >> ime >> prezime >> prosjek >> brojOcjena) {
-		Student* s = new Student(id, ime, prezime);
+	char tip;
+	while (in >> tip) {
+		int id, brojOcjena;
+		std::string ime, prezime;
+		double prosjek;
+		in >> id >> ime >> prezime >> prosjek >> brojOcjena;
+
+		std::vector<int> ocjene(brojOcjena);
 		for (int i = 0; i < brojOcjena; ++i) {
-			int ocjena;
-			in >> ocjena;
-			s->dodajOcjenu(ocjena);
+			in >> ocjene[i];
 		}
-		studenti.push_back(s);
+
+		Student* s = nullptr;
+
+		if (tip == 'S') {
+			s = new Student(id, ime, prezime);
+		}
+		else if (tip == 'D') {
+			std::string tema;
+			in.ignore(); // izbaci razmak
+			std::getline(in, tema);
+			s = new DiplomiraniStudent(id, ime, prezime, tema);
+		}
+
+		if (s) {
+			for (int o : ocjene) {
+				s->dodajOcjenu(o);
+			}
+			studenti.push_back(s);
+		}
 	}
 
-	in.close();
-	std::cout << "Podaci su u?itani iz " << nazivDatoteke << ".\n";
+	std::cout << "Podaci uspjesno ucitani iz " << nazivDatoteke << ".\n";
 }

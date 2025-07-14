@@ -9,3 +9,6 @@ void DiplomiraniStudent::prikazi() const {
 	std::cout << "Tema diplomskog rada: " << temaDiplomskog << "\n";
 }
 
+std::string DiplomiraniStudent::getTemaDiplomskog() const {
+	return temaDiplomskog;
+}

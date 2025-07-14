@@ -12,4 +12,6 @@ public:
 	DiplomiraniStudent(int id, const std::string& ime, const std::string& prezime, const std::string& tema);
 
 	void prikazi() const override;
+
+	std::string getTemaDiplomskog() const;
 };

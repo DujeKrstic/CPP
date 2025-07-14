@@ -1,0 +1,2 @@
+S	23157058 Duje Krstic 4.33333 3 4 4 5 N/A 
+D	23156900 Dina Gladan 4.66667 3 4 5 5 Arduino hranilica

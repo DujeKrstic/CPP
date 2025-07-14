@@ -30,7 +30,7 @@ int main(){
             std::cout << "Prezime: "; std::cin >> prezime;
 
             Student* s = nullptr;
-            
+
             if (tip == 1) {
                 s = new Student(id, ime, prezime);
             }

@@ -11,7 +11,7 @@ void Student::dodajOcjenu(int ocjena){
     ocjene.push_back(ocjena);
 }
 
-//Računanje prosjeka
+//Racunanje prosjeka
 double Student::izracunajProsjek() const{
     if(ocjene.empty()) return 0.0;
     int zbroj = std::accumulate(ocjene.begin(), ocjene.end(), 0);
