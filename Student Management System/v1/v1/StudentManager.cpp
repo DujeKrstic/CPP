@@ -114,3 +114,43 @@ void StudentManager::ucitajIzDatoteke(const std::string& nazivDatoteke) {
 
 	std::cout << "Podaci uspjesno ucitani iz " << nazivDatoteke << ".\n";
 }
+
+void StudentManager::sortirajPoProsjeku(bool silazno) {
+	std::sort(studenti.begin(), studenti.end(), [silazno](Student* a, Student* b) {
+		if (silazno) {
+			return a->izracunajProsjek() > b->izracunajProsjek();
+		} else {
+			return a->izracunajProsjek() < b->izracunajProsjek();
+		}
+	});
+}
+
+void StudentManager::prikaziIznadProsjeka(double prag) const {
+	int br = 0;
+	std::cout << "Studenti s prosjekom iznad " << prag << ":\n";
+	for (const Student* s : studenti) {
+		if (s->izracunajProsjek() > prag) {
+			s->prikazi();
+			br++;
+			std::cout << "---------------------------------\n";
+		}
+	}
+	if(br == 0){
+		std::cout << "Nema studenata s prosjekom iznad " << prag << ".\n";
+	} else {
+		std::cout << "Ukupno studenata iznad prosjeka: " << br << "\n";
+	}
+}
+
+bool StudentManager::obrisiStudentaPoId(int id) {
+	for (auto it = studenti.begin(); it != studenti.end(); ++it) {
+		if ((*it)->getId() == id) {
+			delete *it; // Oslobodi memoriju
+			studenti.erase(it); // Ukloni iz vektora
+			std::cout << "Student s ID " << id << " je obrisan.\n";
+			return true;
+		}
+	}
+	std::cout << "Student s ID " << id << " nije pronaden.\n";
+	return false;
+}

@@ -8,19 +8,22 @@ int main(){
     StudentManager manager;
     manager.ucitajIzDatoteke("students.txt");
 
-    while (true) {
-        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Izlaz\n\nOdabir: ";
-        int izbor;
+    int izbor;
+
+    do{
+        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Obrisi studenta pod ID-jem: \n6. Sortiraj po prosjeku\n7. Prikazi studente iznad zadanog prosjeka: \n8. Izlaz\n\nOdabir: ";
+        
         std::cin >> izbor;
 
-        if (izbor == 1) {
+        switch (izbor) {
 
+        case 1: {
             int tip;
             do {
                 std::cout << "1. Dodaj obicnog studenta\n2. Dodaj diplomiranog studenta\nOdabir:\t";
                 std::cin >> tip;
             } while (tip != 1 && tip != 2);
-            
+
 
 
             int id;
@@ -39,15 +42,15 @@ int main(){
                 std::cout << "Unesi temu diplomskog rada: ";
                 std::cin.ignore(); //zanemari \n iz prethodnog unosa
                 std::getline(std::cin, tema);
-                
+
                 s = new DiplomiraniStudent(id, ime, prezime, tema);
             }
-            
+
 
             //Unos ocjena
             int brojOcjena;
             std::cout << "Koliko ocjena ima student:\t";
-            std::cin>>brojOcjena;
+            std::cin >> brojOcjena;
 
             for (int i = 0; i < brojOcjena; i++) {
                 int ocjena;
@@ -58,13 +61,15 @@ int main(){
 
             manager.dodajStudenta(s);
 
+            break;
         }
+        
 
-        else if (izbor == 2) {
+        case 2:
             manager.prikaziSve();
-        }
-
-        else if (izbor == 3) {
+            break;
+        
+        case 3:{
             int id;
             std::cout << "Unesite ID: ";
             std::cin >> id;
@@ -76,19 +81,53 @@ int main(){
             else {
                 std::cout << "Student nije pronaden.\n";
             }
+        
+            break;
+        
         }
-
-        else if(izbor == 4){
+        
+        case 4:{
             manager.spremiUDatoteku("students.txt");
+            std::cout << "Podaci su spremljeni u datoteku students.txt\n";
+			break;
         }
 
-        else if (izbor == 5) {
+        case 5:{
+            int id;
+            std::cout << "Unesite ID studenta za brisanje: ";
+            std::cin >> id;
+            manager.obrisiStudentaPoId(id);
+            break;
+		}
+
+        case 6: {
+            std::cout << "Sortirati studente po prosjeku (0 = uzlazno, 1 = silazno): ";
+			bool silazno;
+            std::cin >> silazno;
+            manager.sortirajPoProsjeku(silazno);
+			std::cout << "Studenti su sortirani.\n";
             break;
         }
-        else {
-            std::cout << "Neispravan izbor.\n";
+
+        case 7: {
+            double prag;
+            std::cout << "Unesite prag prosjeka: ";
+            std::cin >> prag;
+			manager.prikaziIznadProsjeka(prag);
+            break;
         }
-    }
+
+        case 8: {
+            std::cout << "Izlaz iz programa.\n";
+            break;
+        }
+
+        default:
+            std::cout << "Neispravan izbor. Molimo odaberite ponovno.\n";
+			break;
+        }
+
+    } while (izbor != 8);
 
     return 0;
 }

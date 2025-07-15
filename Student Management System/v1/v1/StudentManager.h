@@ -2,6 +2,7 @@
 				//Onemogucuje dvostruko ukljucivanje datoteke. 
 #include "Student.h"
 #include <vector>
+#include <algorithm>
 
 class StudentManager {
 private:
@@ -13,6 +14,9 @@ public:
 	Student* pronadiPoId(int id);
 	void spremiUDatoteku(const std::string& nazivDatoteke) const;
 	void ucitajIzDatoteke(const std::string& nazivDatoteke);
+	void sortirajPoProsjeku(bool silazno = false); // Sortira studente po prosjeku ocjena
+	void prikaziIznadProsjeka(double prag) const;
+	bool obrisiStudentaPoId(int id);
 
 	~StudentManager();
 
