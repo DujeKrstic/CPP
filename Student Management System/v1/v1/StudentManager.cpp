@@ -154,3 +154,33 @@ bool StudentManager::obrisiStudentaPoId(int id) {
 	std::cout << "Student s ID " << id << " nije pronaden.\n";
 	return false;
 }
+
+void StudentManager::izveziUCsv(const std::string& nazivDatoteke) const {
+	std::ofstream out(nazivDatoteke);
+	if (!out) {
+		std::cerr << "Greska pri otvaranju CSV datoteke.\n";
+		return;
+	}
+
+	out << "ID,Ime,Prezime,Tip,Prosjek,TemaDiplomskog\n";
+
+	for (const Student* s : studenti) {
+		out << s->getId() << ",";
+		out << s->getIme() << ",";
+		out << s->getPrezime() << ",";
+
+		const DiplomiraniStudent* ds = dynamic_cast<const DiplomiraniStudent*>(s);
+		if (ds) {
+			out << "DiplomiraniStudent" << ",";
+			out << ds->izracunajProsjek() << ",";
+			out << "- " << ds->getTemaDiplomskog() << "\n";
+		}
+		else {
+			out << "Student" << ",";
+			out << s->izracunajProsjek() << ",";
+			out << "-\n"; // Nema teme diplomskog
+		}
+	}
+	std::cout << "Podaci uspjesno izvezeni u " << nazivDatoteke << ".\n";
+
+}

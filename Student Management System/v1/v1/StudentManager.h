@@ -17,6 +17,7 @@ public:
 	void sortirajPoProsjeku(bool silazno = false); // Sortira studente po prosjeku ocjena
 	void prikaziIznadProsjeka(double prag) const;
 	bool obrisiStudentaPoId(int id);
+	void izveziUCsv(const std::string& nazivDatoteke) const;
 
 	~StudentManager();
 

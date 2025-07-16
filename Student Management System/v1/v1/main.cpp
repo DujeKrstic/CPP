@@ -11,7 +11,7 @@ int main(){
     int izbor;
 
     do{
-        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Obrisi studenta pod ID-jem: \n6. Sortiraj po prosjeku\n7. Prikazi studente iznad zadanog prosjeka: \n8. Izlaz\n\nOdabir: ";
+        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Obrisi studenta pod ID-jem: \n6. Sortiraj po prosjeku\n7. Prikazi studente iznad zadanog prosjeka: \n8. Izvezi u .csv datoteku\n9. Izlaz\n\nOdabir: ";
         
         std::cin >> izbor;
 
@@ -118,6 +118,15 @@ int main(){
         }
 
         case 8: {
+            std::string nazivDatoteke;
+            std::cout << "Uneiste naziv .csv datoteke (npr. studenti.csv): ";
+            std::cin >> nazivDatoteke;
+            manager.izveziUCsv(nazivDatoteke);
+            break;
+            
+        }
+
+        case 9: {
             std::cout << "Izlaz iz programa.\n";
             break;
         }
