@@ -2,6 +2,7 @@
 #include <string>
 #include "StudentManager.h"
 #include "DiplomiraniStudent.h"
+#include "Test.h"
 
 int main(){
     
@@ -11,7 +12,7 @@ int main(){
     int izbor;
 
     do{
-        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Obrisi studenta pod ID-jem: \n6. Sortiraj po prosjeku\n7. Prikazi studente iznad zadanog prosjeka: \n8. Izvezi u .csv datoteku\n9. Izlaz\n\nOdabir: ";
+        std::cout << "\n======= IZBORNIK =======\n1. Dodaj studenta\n2. Prikazi sve\n3. Trazi po ID\n4. Spremi u datoteku\n5. Obrisi studenta pod ID-jem: \n6. Sortiraj po prosjeku\n7. Prikazi studente iznad zadanog prosjeka: \n8. Izvezi u .csv datoteku\n9. Testiraj program predefiniranim podacima\n10. Izlaz\n\nOdabir: ";
         
         std::cin >> izbor;
 
@@ -65,10 +66,11 @@ int main(){
         }
         
 
-        case 2:
+        case 2:{
             manager.prikaziSve();
             break;
-        
+        }
+
         case 3:{
             int id;
             std::cout << "Unesite ID: ";
@@ -126,17 +128,24 @@ int main(){
             
         }
 
-        case 9: {
+        case 9:{
+            dodajTestneStudente(manager);
+            std::cout << "Sustav uspjesno testiran.\n";
+            break;
+		}
+
+        case 10: {
             std::cout << "Izlaz iz programa.\n";
             break;
         }
 
-        default:
+        default:{
             std::cout << "Neispravan izbor. Molimo odaberite ponovno.\n";
 			break;
+            }
         }
 
-    } while (izbor != 8);
+    } while (izbor != 10);
 
     return 0;
 }
