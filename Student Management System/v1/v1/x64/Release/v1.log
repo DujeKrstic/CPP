@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\Duje\Desktop\Student Management System\v1\v1\main.cpp(38,17): error C2561: 'main': function must return a value
+      C:\Users\Duje\Desktop\Student Management System\v1\v1\main.cpp(7,5):
+      see declaration of 'main'
+  

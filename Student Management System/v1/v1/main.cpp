@@ -29,9 +29,17 @@ int main(){
 
             int id;
             std::string ime, prezime;
-            std::cout << "ID: "; std::cin >> id;
-            std::cout << "Ime: "; std::cin >> ime;
-            std::cout << "Prezime: "; std::cin >> prezime;
+
+            do {
+                std::cout << "ID: "; std::cin >> id;
+                std::cout << "Ime: "; std::cin >> ime;
+                std::cout << "Prezime: "; std::cin >> prezime;
+
+                if (id < 0 || ime.empty() || prezime.empty()) {
+                    std::cout << "\n\nID mora biti pozitivan, a ime i prezime ne smiju biti prazni.\n\n";
+                }
+
+            } while (id < 0 || ime.empty() || prezime.empty());
 
             Student* s = nullptr;
 
@@ -51,12 +59,25 @@ int main(){
             //Unos ocjena
             int brojOcjena;
             std::cout << "Koliko ocjena ima student:\t";
-            std::cin >> brojOcjena;
+
+            do{
+                std::cin >> brojOcjena;
+                if (brojOcjena < 0) {
+                    std::cout << "\nBroj ocjena ne moze biti negativan.\n";
+                }
+            } while (brojOcjena < 0);
 
             for (int i = 0; i < brojOcjena; i++) {
                 int ocjena;
                 std::cout << "Ocjena #" << (i + 1) << ": ";
                 std::cin >> ocjena;
+
+                if (ocjena < 1 || ocjena > 5) {
+                    std::cout << "\nOcjena mora biti iz intervala od 1 do 5\n\n";
+                    --i;
+                    continue;
+                }
+
                 s->dodajOcjenu(ocjena);
             }
 
