@@ -184,3 +184,40 @@ void StudentManager::izveziUCsv(const std::string& nazivDatoteke) const {
 	std::cout << "Podaci uspjesno izvezeni u " << nazivDatoteke << ".\n";
 
 }
+
+void StudentManager::izveziStatistiku(const std::string& nazivDatoteke) const {
+	std::ofstream out(nazivDatoteke);
+	if (!out) {
+		std::cerr << "Greska pri otvaranju datoteke za statistiku.\n";
+		return;
+	}
+
+	int ukupno = studenti.size();
+	int diplomiranih = 0;
+	double ukupniProsjek = 0.0;
+	double maxProsjek = -1.0, minProsjek = 6.0;
+
+	for (const auto& s : studenti) {
+		double p = s->izracunajProsjek();
+		ukupniProsjek += p;
+
+		if (p > maxProsjek) maxProsjek = p;
+		if (p < minProsjek) minProsjek = p;
+
+		// koristi dynamic_cast za provjeru tipa
+		if (dynamic_cast<DiplomiraniStudent*>(s)) {
+			diplomiranih++;
+		}
+	}
+
+	double prosjek = (ukupno > 0) ? ukupniProsjek / ukupno : 0.0;
+
+	out << "Ukupan broj studenata:," << ukupno << "\n";
+	out << "Broj diplomiranih studenata:," << diplomiranih << "\n";
+	out << "Prosjecna ocjena svih studenata:," << prosjek << "\n";
+	out << "Najvisi prosjek:," << maxProsjek << "\n";
+	out << "Najnizi prosjek:," << minProsjek << "\n";
+
+	out.close();
+	std::cout << "Statistika je uspjesno izvezena u: " << nazivDatoteke << "\n";
+}

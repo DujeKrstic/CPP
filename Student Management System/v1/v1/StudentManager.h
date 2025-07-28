@@ -18,6 +18,8 @@ public:
 	void prikaziIznadProsjeka(double prag) const;
 	bool obrisiStudentaPoId(int id);
 	void izveziUCsv(const std::string& nazivDatoteke) const;
+	void izveziStatistiku(const std::string& nazivDatoteke) const;
+
 
 	~StudentManager();
 
